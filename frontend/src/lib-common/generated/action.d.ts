@@ -247,9 +247,10 @@ export type ChildDiscussion =
 
 export type ChildDocument =
   | 'DELETE'
+  | 'NEXT_STATE'
+  | 'PREV_STATE'
   | 'PUBLISH'
   | 'READ'
-  | 'UNPUBLISH'
   | 'UPDATE'
 
 export type DailyServiceTime =

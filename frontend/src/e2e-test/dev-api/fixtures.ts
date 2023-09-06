@@ -22,6 +22,7 @@ import {
   AssistanceNeedPreschoolDecisionForm,
   AssistanceNeedPreschoolDecisionGuardian
 } from 'lib-common/generated/api-types/assistanceneed'
+import { DocumentStatus } from 'lib-common/generated/api-types/document'
 import {
   FixedPeriodQuestionnaire,
   HolidayPeriod
@@ -1990,6 +1991,7 @@ export class Fixture {
       id: uuidv4(),
       childId: 'not_set',
       templateId: 'not_set',
+      status: 'DRAFT',
       publishedAt: null,
       content: {
         answers: [
@@ -2728,6 +2730,11 @@ export class ChildDocumentBuilder extends FixtureBuilder<DevChildDocument> {
 
   withTemplate(templateId: UUID) {
     this.data.templateId = templateId
+    return this
+  }
+
+  withStatus(status: DocumentStatus) {
+    this.data.status = status
     return this
   }
 
