@@ -7,7 +7,6 @@ package fi.espoo.evaka.shared.security
 import fi.espoo.evaka.ExcludeCodeGen
 import fi.espoo.evaka.daycare.CareType
 import fi.espoo.evaka.daycare.domain.ProviderType
-import fi.espoo.evaka.document.childdocument.DocumentStatus
 import fi.espoo.evaka.shared.ApplicationId
 import fi.espoo.evaka.shared.ApplicationNoteId
 import fi.espoo.evaka.shared.AssistanceActionId
@@ -2120,10 +2119,7 @@ sealed interface Action {
                 .inPlacementGroupOfChildOfChildDocument()
         ),
         UPDATE(
-            HasGlobalRole(ADMIN)
-                .andChildDocumentInStatus(
-                    statuses = DocumentStatus.values().filter { it.editable }
-                ),
+            HasGlobalRole(ADMIN),
             HasUnitRole(UNIT_SUPERVISOR, SPECIAL_EDUCATION_TEACHER)
                 .withUnitFeatures(PilotFeature.VASU_AND_PEDADOC)
                 .inPlacementUnitOfChildOfChildDocument(editable = true),
@@ -2132,10 +2128,7 @@ sealed interface Action {
                 .inPlacementGroupOfChildOfChildDocument(editable = true)
         ),
         PUBLISH(
-            HasGlobalRole(ADMIN)
-                .andChildDocumentInStatus(
-                    DocumentStatus.values().filter { it != DocumentStatus.COMPLETED }
-                ),
+            HasGlobalRole(ADMIN),
             HasUnitRole(UNIT_SUPERVISOR, SPECIAL_EDUCATION_TEACHER)
                 .withUnitFeatures(PilotFeature.VASU_AND_PEDADOC)
                 .inPlacementUnitOfChildOfChildDocument(publishable = true),
@@ -2143,7 +2136,7 @@ sealed interface Action {
                 .withUnitFeatures(PilotFeature.VASU_AND_PEDADOC)
                 .inPlacementGroupOfChildOfChildDocument(publishable = true)
         ),
-        NEXT_STATE(
+        NEXT_STATUS(
             HasGlobalRole(ADMIN),
             HasUnitRole(UNIT_SUPERVISOR, SPECIAL_EDUCATION_TEACHER)
                 .withUnitFeatures(PilotFeature.VASU_AND_PEDADOC)
@@ -2152,9 +2145,9 @@ sealed interface Action {
                 .withUnitFeatures(PilotFeature.VASU_AND_PEDADOC)
                 .inPlacementGroupOfChildOfChildDocument()
         ),
-        PREV_STATE(HasGlobalRole(ADMIN)),
+        PREV_STATUS(HasGlobalRole(ADMIN)),
         DELETE(
-            HasGlobalRole(ADMIN).andChildDocumentInStatus(listOf(DocumentStatus.DRAFT)),
+            HasGlobalRole(ADMIN),
             HasUnitRole(UNIT_SUPERVISOR, SPECIAL_EDUCATION_TEACHER)
                 .withUnitFeatures(PilotFeature.VASU_AND_PEDADOC)
                 .inPlacementUnitOfChildOfChildDocument(deletable = true),

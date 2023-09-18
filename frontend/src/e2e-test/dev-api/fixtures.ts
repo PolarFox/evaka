@@ -22,7 +22,10 @@ import {
   AssistanceNeedPreschoolDecisionForm,
   AssistanceNeedPreschoolDecisionGuardian
 } from 'lib-common/generated/api-types/assistanceneed'
-import { DocumentStatus } from 'lib-common/generated/api-types/document'
+import {
+  DocumentContent,
+  DocumentStatus
+} from 'lib-common/generated/api-types/document'
 import {
   FixedPeriodQuestionnaire,
   HolidayPeriod
@@ -2001,7 +2004,8 @@ export class Fixture {
             answer: 'test'
           }
         ]
-      }
+      },
+      publishedContent: null
     })
   }
 }
@@ -2740,6 +2744,11 @@ export class ChildDocumentBuilder extends FixtureBuilder<DevChildDocument> {
 
   withPublishedAt(publishedAt: HelsinkiDateTime | null) {
     this.data.publishedAt = publishedAt
+    return this
+  }
+
+  withPublishedContent(publishedContent: DocumentContent | null) {
+    this.data.publishedContent = publishedContent
     return this
   }
 
